@@ -10,17 +10,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { supabase } from "@/lib/supabase"
 
+interface Buyer {
+  id: string
+  name: string
+  locations: string[]
+}
+
 interface LocationFilterSelectorProps {
+  buyers: Buyer[]
   selectedLocations: string[]
   onChange: (locations: string[]) => void
   placeholder?: string
 }
 
-export default function LocationFilterSelector({
+const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
+  buyers,
   selectedLocations,
   onChange,
   placeholder = "Select locations...",
-}: LocationFilterSelectorProps) {
+}) => {
   const [open, setOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("")
   const [availableLocations, setAvailableLocations] = useState<string[]>([])
@@ -57,7 +65,7 @@ export default function LocationFilterSelector({
 
         // Add locations array items
         if (buyer.locations) {
-          buyer.locations.forEach((loc) => locationSet.add(loc))
+          buyer.locations.forEach((loc: string) => locationSet.add(loc))
         }
       })
 
@@ -176,3 +184,5 @@ export default function LocationFilterSelector({
     </div>
   )
 }
+
+export default LocationFilterSelector
