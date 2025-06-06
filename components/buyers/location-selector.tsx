@@ -15,7 +15,7 @@ interface LocationSelectorProps {
 }
 
 // Helper function to format location suggestions
-function formatPlace(prediction: any) {
+function formatPlace(prediction: { description: string; types?: string[] }) {
   const desc = prediction.description
   const types = prediction.types || []
   const parts = desc.split(",").map((s: string) => s.trim())
