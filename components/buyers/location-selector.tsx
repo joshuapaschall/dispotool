@@ -59,7 +59,7 @@ export default function LocationSelector({
   const [isLoading, setIsLoading] = useState(false)
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [open, setOpen] = useState(false)
-  const debounceRef = useRef<NodeJS.Timeout>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Fetch location suggestions
   const fetchSuggestions = async (input: string) => {
@@ -104,16 +104,26 @@ export default function LocationSelector({
     }, 500)
   }
 
-  // Handle input change
+  // Handle input change for libraries expecting (value: string)
   const handleInputChange = (input: string) => {
     setInputValue(input)
-
     if (input.length > 2) {
       debouncedFetch(input)
     } else {
       setSuggestions([])
     }
   }
+
+  // Alternative: Handle input change for libraries expecting (event: React.ChangeEvent<HTMLInputElement>)
+  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const input = event.target.value
+  //   setInputValue(input)
+  //   if (input.length > 2) {
+  //     debouncedFetch(input)
+  //   } else {
+  //     setSuggestions([])
+  //   }
+  // }
 
   // Add a location
   const addLocation = (location: string) => {
@@ -148,7 +158,8 @@ export default function LocationSelector({
           <CommandInput
             placeholder={value.length ? "" : placeholder}
             value={inputValue}
-            onValueChange={handleInputChange}
+            onValueChange={handleInputChange} // For shadcn/ui and similar
+            // onChange={handleInputChange}   // Uncomment if your UI library expects onChange
             onBlur={() => setTimeout(() => setOpen(false), 200)}
             onFocus={() => setOpen(true)}
             className="border-0 focus:ring-0 p-0 h-8"
