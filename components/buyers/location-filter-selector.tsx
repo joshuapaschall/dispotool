@@ -10,25 +10,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { supabase } from "@/lib/supabase"
 
-interface Buyer {
-  id: string
-  name: string
-  locations: string[]
-}
-
 interface LocationFilterSelectorProps {
-  buyers: Buyer[]
   selectedLocations: string[]
   onChange: (locations: string[]) => void
   placeholder?: string
 }
 
-const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
-  buyers,
+export default function LocationFilterSelector({
   selectedLocations,
   onChange,
   placeholder = "Select locations...",
-}) => {
+}: LocationFilterSelectorProps) {
   const [open, setOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("")
   const [availableLocations, setAvailableLocations] = useState<string[]>([])
@@ -51,7 +43,7 @@ const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
 
       const locationSet = new Set<string>()
 
-      data?.forEach((buyer: any) => {
+      data?.forEach((buyer) => {
         // Add city, state combinations
         if (buyer.mailing_city && buyer.mailing_state) {
           locationSet.add(`${buyer.mailing_city}, ${buyer.mailing_state}`)
@@ -65,7 +57,7 @@ const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
 
         // Add locations array items
         if (buyer.locations) {
-          buyer.locations.forEach((loc: string) => locationSet.add(loc))
+          buyer.locations.forEach((loc) => locationSet.add(loc))
         }
       })
 
@@ -184,5 +176,3 @@ const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
     </div>
   )
 }
-
-export default LocationFilterSelector
