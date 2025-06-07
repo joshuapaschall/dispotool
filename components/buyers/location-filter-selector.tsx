@@ -57,7 +57,7 @@ export default function LocationFilterSelector({
 
         // Add locations array items
         if (buyer.locations) {
-          buyer.locations.forEach((loc) => locationSet.add(loc))
+          buyer.locations.forEach((loc: string) => locationSet.add(loc))
         }
       })
 
