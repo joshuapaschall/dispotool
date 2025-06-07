@@ -51,7 +51,7 @@ const LocationFilterSelector: React.FC<LocationFilterSelectorProps> = ({
 
       const locationSet = new Set<string>()
 
-      data?.forEach((buyer) => {
+      data?.forEach((buyer: any) => {
         // Add city, state combinations
         if (buyer.mailing_city && buyer.mailing_state) {
           locationSet.add(`${buyer.mailing_city}, ${buyer.mailing_state}`)
