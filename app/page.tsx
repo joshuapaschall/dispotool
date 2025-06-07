@@ -803,8 +803,16 @@ export default function BuyersPage() {
                     <div className="flex items-center justify-between min-w-0">
                       <div className="truncate mr-2 text-sm font-semibold text-gray-900">{formatName(buyer)}</div>
                       <div className="flex items-center space-x-1">
-                        {buyer.vip && <Star className="h-4 w-4 text-amber-500 fill-amber-500" title="VIP Client" />}
-                        {buyer.vetted && <CheckCircle className="h-4 w-4 text-emerald-500" title="Vetted Buyer" />}
+                        {buyer.vip && (
+                          <span title="VIP Client">
+                            <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+                          </span>
+                        )}
+                        {buyer.vetted && (
+                          <span title="Vetted Buyer">
+                            <CheckCircle className="h-4 w-4 text-emerald-500" />
+                          </span>
+                        )}
                       </div>
                     </div>
                     {buyer.company && <div className="text-xs text-muted-foreground">{buyer.company}</div>}
@@ -876,10 +884,14 @@ export default function BuyersPage() {
                       </Badge>
                       <div className="flex items-center space-x-2">
                         {buyer.can_receive_email && (
-                          <Mail className="h-4 w-4 text-blue-500" title="Can receive email" />
+                          <span title="Can receive email">
+                            <Mail className="h-4 w-4 text-blue-500" />
+                          </span>
                         )}
                         {buyer.can_receive_sms && (
-                          <MessageSquare className="h-4 w-4 text-purple-500" title="Can receive SMS" />
+                          <span title="Can receive SMS">
+                            <MessageSquare className="h-4 w-4 text-purple-500" />
+                          </span>
                         )}
                       </div>
                     </div>
